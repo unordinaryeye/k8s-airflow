@@ -1,0 +1,35 @@
+airflow:
+  executor: KubernetesExecutor
+  config:
+    AIRFLOW__KUBERNETES__DELETE_WORKER_PODS: "True"
+
+workers:
+  enabled: false
+
+flower:
+  enabled: false
+
+redis:
+  enabled: false
+
+gitSync:
+  enabled: true
+
+  image: 
+    repository: k8s.gcr.io/git-sync/git-sync
+    tag: v3.2.2
+    ## values: Always or IfNotPresent
+    pullPolicy: IfNotPresent
+    uid: 65533
+    gid: 65533
+
+  repo: https://github.com/altair4357/MLOps_airflow.git
+  repoSubPath: dags
+  branch: main
+  revision: HEAD
+  depth: 1
+  syncWait: 60
+  syncTimeout: 120
+  httpSecret: "airflow-secrets"
+  httpSecretUsernameKey: SmVvbmdIbyBLaW0=
+  httpSecretPasswordKey: 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
